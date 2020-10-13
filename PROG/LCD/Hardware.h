@@ -11,6 +11,7 @@ public:
 	Hardware();
 	void setText(const std::string &str);
 private:
+	void drawLine(sf::RenderTarget &target, int line);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 	sf::Texture _texture;
 	sf::Font _font;
