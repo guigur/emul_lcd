@@ -5,4 +5,4 @@ It can be very usefull if you're working on Visualstudio and don't have access t
 
 **Still WIP**
 
-![Alt text](IMGS/Capture.PNG?raw=true "Title")
+![LCD demo](IMGS/2.PNG?raw=true "LCD demo")

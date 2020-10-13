@@ -1,4 +1,4 @@
 ﻿  Hardware.cpp
-  LiquidCrystal.cpp
-  Génération de code en cours...
-  LCD.vcxproj -> C:\Users\guigur\Documents\github\emul_lcd\PROG\Debug\LCD.exe
+c:\users\guillaume.arthaud\documents\github\emul_lcd\prog\lcd\hardware.cpp(11): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\guillaume.arthaud\documents\github\emul_lcd\prog\lcd\hardware.cpp(51): warning C4018: '<' : incompatibilité signed/unsigned
+  LCD.vcxproj -> C:\Users\Guillaume.ARTHAUD\Documents\github\emul_lcd\PROG\Debug\LCD.exe

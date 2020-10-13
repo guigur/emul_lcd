@@ -1,4 +1,4 @@
-#include "LiquidCrystal.h"
+﻿#include "LiquidCrystal.h"
 #include "Hardware.h"
 
 LiquidCrystal::LiquidCrystal()
@@ -10,11 +10,19 @@ LiquidCrystal::LiquidCrystal()
 
 void LiquidCrystal::gui_thread()
 {
-	sf::RenderWindow window(sf::VideoMode(847/2, 380/2), "LCD 16x2");
-	_window = &window;
-	Hardware hard;
+	sf::Vector2u size;
+	size.x = 550;
+	int ratio = 847 / 380;
+	size.y = size.x / ratio;
 
-	hard.setText("I LOVE LCDS");
+
+	sf::RenderWindow window(sf::VideoMode(size.x, size.y), "LCD 16x2");
+	_window = &window;
+	Hardware hard(_window->getSize());
+
+	hard.setText("I LOVE LCDs");
+	hard.setText("-> guigur.com <-", 1);
+
 	while (_window->isOpen())
 	{
 		sf::Event event;
