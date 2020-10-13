@@ -1,10 +1,7 @@
 #ifndef LIQUIDCRYSTAL_H_
 #define LIQUIDCRYSTAL_H_
 
-#include <SFML/Graphics.hpp>
-#include <thread>
-
-#include <cstdint> //types
+#include <stdint.h> //types
 
 #define LCD_CLEARDISPLAY 0x01
 #define LCD_RETURNHOME 0x02
@@ -86,10 +83,9 @@ class LiquidCrystal
 	//	virtual size_t write(uint8_t);
 		void command(uint8_t);
 
-		//using Print::write;
+		/*template<typename T>
+		void print(const T& str);*/
 private:
-	sf::RenderWindow *_window;
-	void gui_thread();
 	/*void send(uint8_t, uint8_t);
 	void write4bits(uint8_t);
 	void write8bits(uint8_t);

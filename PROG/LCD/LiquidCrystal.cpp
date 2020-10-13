@@ -1,43 +1,12 @@
 ﻿#include "LiquidCrystal.h"
 #include "Hardware.h"
 
+Hardware hard;
+
 LiquidCrystal::LiquidCrystal()
 {
-	
-	std::thread gui(&LiquidCrystal::gui_thread, this);     // spawn new thread that calls foo()
-	gui.detach();
+
 }
-
-void LiquidCrystal::gui_thread()
-{
-	sf::Vector2u size;
-	size.x = 550;
-	int ratio = 847 / 380;
-	size.y = size.x / ratio;
-
-
-	sf::RenderWindow window(sf::VideoMode(size.x, size.y), "LCD 16x2");
-	_window = &window;
-	Hardware hard(_window->getSize());
-
-	hard.setText("I LOVE LCDs");
-	hard.setText("-> guigur.com <-", 1);
-
-	while (_window->isOpen())
-	{
-		sf::Event event;
-		while (_window->pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				_window->close();
-		}
-
-		_window->clear();
-		_window->draw(hard);
-		_window->display();
-	}
-}
-
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
@@ -65,6 +34,7 @@ LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t enable,
 	init(1, rs, 255, enable, d0, d1, d2, d3, 0, 0, 0, 0);
 }
 
+//not very usefull
 void LiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
 	uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
@@ -93,7 +63,10 @@ void LiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t en
 
 void LiquidCrystal::begin(uint8_t cols, uint8_t rows, uint8_t charsize)
 {
-
+	hard.setNumberOfCollums(cols);
+	hard.setNumberOfRows(rows);
+	hard.setText("I LOVE LCDs", 0);
+	hard.setText("-> guigur.com <-", 1);
 }
 
 void LiquidCrystal::clear()
@@ -190,3 +163,10 @@ void LiquidCrystal::command(uint8_t)
 {
 
 }
+/*
+template<typename T>
+void LiquidCrystal::print(const T& str)
+{
+
+}
+*/
