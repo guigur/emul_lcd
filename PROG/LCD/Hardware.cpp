@@ -16,6 +16,14 @@ Hardware::Hardware()
 	gui.detach();
 }
 
+void Hardware::clear()
+{
+	for (int i = 0; i < _numberOfRows; i++) //init the vector
+	{
+		linesStr.at(i) = "";
+	}
+}
+
 void Hardware::gui_thread()
 {
 	sf::Vector2u size;
@@ -51,13 +59,10 @@ void Hardware::gui_thread()
 
 void Hardware::setText(const std::string &str, const unsigned int &line)
 {
-	//std::cout << linesStr.size() << " " << line << std::endl;
-	if (linesStr.size() >= line)
+	if (!linesStr.empty() && linesStr.size() > line)
 	{
-		std::cout << linesStr.size() << " " << str << std::endl;
 		linesStr.at(line) = str;
 	}
-
 }
 
 void Hardware::setNumberOfCollums(const unsigned int &noc)
@@ -112,9 +117,6 @@ void Hardware::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	for (int i = 0; i < _numberOfRows; i++) //draw each line
 	{
-		std::cout << "row " << _numberOfRows << " I " << i << std::endl;
 		drawLine(target, i);
 	}
-	
-
 }

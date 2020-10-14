@@ -1,1 +1,18 @@
-﻿
+﻿  Character.cpp
+c:\users\guigur\documents\github\emul_lcd\prog\lcd\character.cpp(165): warning C4244: 'argument' : conversion de 'double' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+c:\users\guigur\documents\github\emul_lcd\prog\lcd\character.cpp(174): warning C4244: 'argument' : conversion de 'double' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+  Hardware.cpp
+c:\users\guigur\documents\github\emul_lcd\prog\lcd\hardware.cpp(78): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\guigur\documents\github\emul_lcd\prog\lcd\hardware.cpp(113): warning C4018: '<' : incompatibilité signed/unsigned
+  LiquidCrystal.cpp
+  main.cpp
+  Génération de code en cours...
+sfml-graphics-d.lib(sfml-graphics-d-2.dll) : fatal error LNK1112: type d'ordinateur module 'x86' en conflit avec le type d'ordinateur cible 'x64'

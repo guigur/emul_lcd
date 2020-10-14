@@ -63,15 +63,21 @@ void LiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t en
 
 void LiquidCrystal::begin(uint8_t cols, uint8_t rows, uint8_t charsize)
 {
+	_numlines = rows;
+
 	hard.setNumberOfCollums(cols);
 	hard.setNumberOfRows(rows);
 	hard.setText("I LOVE LCDs", 0);
 	hard.setText("-> guigur.com <-", 1);
+	//delayMicroseconds(50000);
+
 }
 
 void LiquidCrystal::clear()
 {
-
+	hard.clear();
+	command(LCD_CLEARDISPLAY);  // clear display, set cursor position to zero
+	//delayMicroseconds(2000);  // this command takes a long time!
 }
 
 void LiquidCrystal::home()
