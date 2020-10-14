@@ -1,5 +1,7 @@
 ﻿#include "LiquidCrystal.h"
 #include "Hardware.h"
+#include <string>
+#include <sstream>
 
 Hardware hard;
 
@@ -156,9 +158,9 @@ void LiquidCrystal::createChar(uint8_t, uint8_t[])
 
 }
 
-void LiquidCrystal::setCursor(uint8_t, uint8_t)
+void LiquidCrystal::setCursor(uint8_t col, uint8_t row)
 {
-
+	hard.setCursor(col, row);
 }
 
 /*virtual size_t write(uint8_t)
@@ -174,7 +176,9 @@ void LiquidCrystal::command(uint8_t)
 template<typename T>
 void LiquidCrystal::print(T str)
 {
-	std::cout << str << std::endl;
+	std::stringstream ss;
+	ss << str;
+	hard.print(ss.str());
 }
 
 template void LiquidCrystal::print<int>(int);

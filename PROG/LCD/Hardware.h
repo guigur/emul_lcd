@@ -13,7 +13,10 @@ public:
 	void clear();
 	void returnHome();
 
-	void setText(const std::string &str, const unsigned int &line = 0);
+	void setText(const std::string &str, const unsigned int &line);
+
+	void setCursor(const unsigned int &col, const unsigned int &row);
+	void print(const std::string &str);
 	void setNumberOfCollums(const unsigned int &noc);
 	unsigned int getNumberOfCollums();
 	void setNumberOfRows(const unsigned int &nor);
@@ -23,7 +26,9 @@ private:
 	void drawLine(sf::RenderTarget &target, int line) const;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 	void gui_thread();
+	void fillWithBlanks(const unsigned int &line);
 
+	sf::Vector2u _cursor;
 	sf::RenderWindow *_window;
 	sf::Vector2u _size;
 
@@ -33,7 +38,7 @@ private:
 	unsigned int _spaceBetweenLines;
 
 	sf::Texture _texture;
-	std::vector<std::string> linesStr;
+	std::vector<std::string> _linesStr;
 	sf::RectangleShape _body;
 };
 
