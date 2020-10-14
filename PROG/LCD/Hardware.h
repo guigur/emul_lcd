@@ -14,7 +14,8 @@ public:
 	void returnHome();
 
 	void setText(const std::string &str, const unsigned int &line);
-	void blink(bool isBlink);
+	void blink(bool state);
+	void cursor(bool state);
 	void setCursor(const unsigned int &col, const unsigned int &row);
 	void print(const std::string &str);
 	void setNumberOfCollums(const unsigned int &noc);
@@ -35,10 +36,12 @@ private:
 
 	unsigned int _numberOfCollums;
 	unsigned int _numberOfRows;
-	bool _blink;
 	unsigned int _spaceBetweenLines;
 
 	bool _cursorState;
+	bool _cursorBlink;
+	bool _blinkState;
+
 	sf::Time _blickingRate;
 	sf::Clock *_clock; // starts the clock
 	sf::Texture _texture;

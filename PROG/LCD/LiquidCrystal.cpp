@@ -100,22 +100,22 @@ void LiquidCrystal::display()
 
 void LiquidCrystal::noBlink()
 {
-
+	hard.blink(false);
 }
 
 void LiquidCrystal::blink()
 {
-
+	hard.blink(true);
 }
 
 void LiquidCrystal::noCursor()
 {
-
+	hard.cursor(false);
 }
 
 void LiquidCrystal::cursor()
 {
-
+	hard.cursor(true);
 }
 
 void LiquidCrystal::scrollDisplayLeft()

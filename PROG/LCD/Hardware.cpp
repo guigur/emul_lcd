@@ -4,9 +4,8 @@ Hardware::Hardware()
 {
 	setupCharset();
 	_spaceBetweenLines = 45;
-	_blink = false;
 	_clock = &sf::Clock(); //init da clock
-	_blickingRate = sf::seconds(1.f);
+	_blickingRate = sf::seconds(0.5f);
 
 	if (!_texture.loadFromFile("medias/lcd.png"))
 	{
@@ -50,6 +49,15 @@ void Hardware::gui_thread()
 
 	while (_window->isOpen())
 	{
+		if (_cursorBlink && _clock->getElapsedTime() >= _blickingRate) //Blinky blinky
+		{
+			if (_blinkState == true)
+				_blinkState = false;
+			else
+				_blinkState = true;
+			_clock->restart();
+		}
+
 		sf::Event event;
 		while (_window->pollEvent(event))
 		{
@@ -63,10 +71,15 @@ void Hardware::gui_thread()
 	}
 }
 
-void Hardware::blink(bool isBlink)
+void Hardware::blink(bool state)
 {
-	_blink = isBlink;
+	_cursorBlink = state;
+	_cursorState = state;
+}
 
+void Hardware::cursor(bool state)
+{
+	_cursorState = state;
 }
 
 void Hardware::setCursor(const unsigned int &col, const unsigned int &row)
@@ -129,20 +142,16 @@ void Hardware::drawLine(sf::RenderTarget& target, int line) const
 
 	for (unsigned int i = 0; i < _numberOfCollums && i < _linesStr.at(line).length(); i++)
 	{
-		/*if (_cursor.x == i && _cursor.y == line)
+		charos.setChar(_linesStr.at(line).at(i));
+
+		if (_cursorState && _cursor.x == i && _cursor.y == line)
 		{
-			if (_clock->getElapsedTime() >= _blickingRate)
-			{
+			if (_blinkState == true)
+				charos.setChar('_');
+			else
 				charos.setChar(0xFF);
-				//charos.blinkCursor(_cursor);
-				std::cout << "blink";
-				_clock->restart();
-			}
 		}
-		else
-		{*/
-			charos.setChar(_linesStr.at(line).at(i));
-		//}
+
 		charos.setPosition(startPos.x + (charos.getPixSize().x * 5 + spaceCharacters) * i, startPos.y + 0 + (line * _spaceBetweenLines));
 		target.draw(charos);
 	}
@@ -168,10 +177,15 @@ void Hardware::fillWithBlanks(const unsigned int &line)
 
 void Hardware::setupCharset()
 {
-	//TODO: put charset in static or in hardware
-	_charset[0xFF] = { { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F } }; //cursor
+	///TODO: finish the charset and maybe add an alternative one
 
-	//2eme colonne
+	//1st col 0x00 -> 0x0F
+	//reserved for the lcd ram
+
+	//2nd col 0x10 -> 0x1F
+	//empty
+
+	//3rd col 0x20 -> 0x2F
 	_charset[' '] = { { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 } };
 	_charset['!'] = { { 0x04 }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x00 }, { 0x00 }, { 0x04 }, { 0x00 } };
 	_charset['"'] = { { 0x0A }, { 0x0A }, { 0x0A }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 } };
@@ -189,7 +203,7 @@ void Hardware::setupCharset()
 	_charset['.'] = { { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x0C }, { 0x0C }, { 0x00 } };
 	_charset['/'] = { { 0x00 }, { 0x01 }, { 0x02 }, { 0x04 }, { 0x08 }, { 0x10 }, { 0x00 }, { 0x00 } };
 
-	//3eme colonne
+	//4th col 0x30 -> 0x3F
 	_charset['0'] = { { 0x0E }, { 0x11 }, { 0x13 }, { 0x15 }, { 0x19 }, { 0x11 }, { 0x0E }, { 0x00 } };
 	_charset['1'] = { { 0x04 }, { 0x0C }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x0E }, { 0x00 } };
 	_charset['2'] = { { 0x0E }, { 0x11 }, { 0x01 }, { 0x02 }, { 0x04 }, { 0x08 }, { 0x1F }, { 0x00 } };
@@ -207,7 +221,7 @@ void Hardware::setupCharset()
 	_charset['>'] = { { 0x08 }, { 0x04 }, { 0x02 }, { 0x01 }, { 0x02 }, { 0x04 }, { 0x08 }, { 0x00 } };
 	_charset['?'] = { { 0x0E }, { 0x11 }, { 0x01 }, { 0x02 }, { 0x04 }, { 0x00 }, { 0x04 }, { 0x00 } };
 
-	//4eme colonne
+	//5th col 0x40 -> 0x4F
 	_charset['@'] = { { 0x0E }, { 0x11 }, { 0x01 }, { 0x0D }, { 0x15 }, { 0x15 }, { 0x0E }, { 0x00 } };
 	_charset['A'] = { { 0x0E }, { 0x11 }, { 0x11 }, { 0x1F }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x00 } };
 	_charset['B'] = { { 0x1E }, { 0x11 }, { 0x11 }, { 0x1E }, { 0x11 }, { 0x11 }, { 0x1E }, { 0x00 } };
@@ -225,7 +239,7 @@ void Hardware::setupCharset()
 	_charset['N'] = { { 0x11 }, { 0x11 }, { 0x19 }, { 0x15 }, { 0x13 }, { 0x11 }, { 0x11 }, { 0x00 } };
 	_charset['O'] = { { 0x0E }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x0E }, { 0x00 } };
 
-	//5eme colonne
+	//6th col 0x50 -> 0x5F
 	_charset['P'] = { { 0x1E }, { 0x11 }, { 0x11 }, { 0x1E }, { 0x10 }, { 0x10 }, { 0x10 }, { 0x00 } };
 	_charset['Q'] = { { 0x0E }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x15 }, { 0x12 }, { 0x0D }, { 0x00 } };
 	_charset['R'] = { { 0x1E }, { 0x11 }, { 0x11 }, { 0x1E }, { 0x14 }, { 0x12 }, { 0x11 }, { 0x00 } };
@@ -243,7 +257,7 @@ void Hardware::setupCharset()
 	_charset['^'] = { { 0x04 }, { 0x0A }, { 0x11 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 } };
 	_charset['_'] = { { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x1F }, { 0x00 } };
 
-	//6eme colonne
+	//7th col 0x60 -> 0x6F
 	_charset['`'] = { { 0x08 }, { 0x04 }, { 0x02 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 }, { 0x00 } };
 	_charset['a'] = { { 0x00 }, { 0x00 }, { 0x0E }, { 0x01 }, { 0x0F }, { 0x11 }, { 0x0F }, { 0x00 } };
 	_charset['b'] = { { 0x10 }, { 0x10 }, { 0x16 }, { 0x19 }, { 0x11 }, { 0x11 }, { 0x1E }, { 0x00 } };
@@ -261,7 +275,7 @@ void Hardware::setupCharset()
 	_charset['n'] = { { 0x00 }, { 0x00 }, { 0x16 }, { 0x19 }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x00 } };
 	_charset['o'] = { { 0x00 }, { 0x00 }, { 0x0E }, { 0x11 }, { 0x11 }, { 0x11 }, { 0x0E }, { 0x00 } };
 
-	//7eme colonne
+	//8th col 0x70 -> 0x7F
 	_charset['p'] = { { 0x00 }, { 0x00 }, { 0x1E }, { 0x11 }, { 0x1E }, { 0x10 }, { 0x10 }, { 0x00 } };
 	_charset['q'] = { { 0x00 }, { 0x00 }, { 0x0D }, { 0x13 }, { 0x0F }, { 0x01 }, { 0x01 }, { 0x00 } };
 	_charset['r'] = { { 0x00 }, { 0x00 }, { 0x16 }, { 0x19 }, { 0x10 }, { 0x10 }, { 0x10 }, { 0x00 } };
@@ -276,6 +290,32 @@ void Hardware::setupCharset()
 	_charset['{'] = { { 0x02 }, { 0x04 }, { 0x04 }, { 0x08 }, { 0x04 }, { 0x04 }, { 0x02 }, { 0x00 } };
 	_charset['|'] = { { 0x04 }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x04 }, { 0x00 } };
 	_charset['}'] = { { 0x08 }, { 0x04 }, { 0x04 }, { 0x02 }, { 0x04 }, { 0x04 }, { 0x08 }, { 0x00 } };
-	//charset['→'] = { { 0x00 }, { 0x04 }, { 0x02 }, { 0x1F }, { 0x02 }, { 0x04 }, { 0x00 }, { 0x00 } }; //not quite working
-	//charset['←'] = { { 0x00 }, { 0x04 }, { 0x08 }, { 0x1F }, { 0x08 }, { 0x04 }, { 0x00 }, { 0x00 } };
+	_charset[0x7E] = { { 0x00 }, { 0x04 }, { 0x02 }, { 0x1F }, { 0x02 }, { 0x04 }, { 0x00 }, { 0x00 } }; //→
+	_charset[0x7F] = { { 0x00 }, { 0x04 }, { 0x08 }, { 0x1F }, { 0x08 }, { 0x04 }, { 0x00 }, { 0x00 } }; //←
+
+	//9th col 0x80 -> 0x8F
+	//empty
+
+	//10th col 0x90 -> 0x9F
+	//empty
+
+	//11th col 0xA0 -> 0xAF
+	//0xA0 is empty
+	///TODO: here
+
+	//12th col 0xB0 -> 0xBF
+	///TODO: here
+
+	//13th col 0xC0 -> 0xCF
+	///TODO: here
+
+	//14th col 0xD0 -> 0xDF
+	///TODO: here
+
+	//15th col 0xE0 -> 0xEF
+	///TODO: here
+
+	//15th col 0xEF -> 0xFF
+	///TODO: here
+	_charset[0xFF] = { { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F }, { 0x1F } }; //cursor
 }
