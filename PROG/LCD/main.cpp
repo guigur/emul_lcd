@@ -1,7 +1,6 @@
 #include "LiquidCrystal.h"
 #include <iostream>
 //#include <Arduino.h>
-#include <Windows.h>
 #include <chrono>
 #include <thread>
 
@@ -35,13 +34,16 @@ void delay(int msec);
 
 		while (1)
 		{
-			time_t t;
+			//time_t t;
 
 			
 			lcd.setCursor(0, 0); // set the cursor to (0,0):
 			// print from 0 to 9:
-			
-			
+			lcd.print("Hello");
+			lcd.setCursor(0, 1); // set the cursor to (0,0):
+			lcd.print("bien ou quoi");
+			delay(500);
+			/*
 			for (int thisChar = 0; thisChar < 10; thisChar++) {
 				srand((unsigned)time(&t));
 
@@ -60,7 +62,7 @@ void delay(int msec);
 			}
 			// turn off automatic scrolling
 			//lcd.noAutoscroll();
-
+			*/
 			// clear screen for the next loop:
 			lcd.clear();
 			

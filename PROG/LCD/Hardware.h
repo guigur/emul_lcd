@@ -1,4 +1,4 @@
-#ifndef HARDWARE_H_
+﻿#ifndef HARDWARE_H_
 #define HARDWARE_H_
 
 #include <SFML/Graphics.hpp>
@@ -14,7 +14,7 @@ public:
 	void returnHome();
 
 	void setText(const std::string &str, const unsigned int &line);
-
+	void blink(bool isBlink);
 	void setCursor(const unsigned int &col, const unsigned int &row);
 	void print(const std::string &str);
 	void setNumberOfCollums(const unsigned int &noc);
@@ -27,6 +27,7 @@ private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 	void gui_thread();
 	void fillWithBlanks(const unsigned int &line);
+	void setupCharset();
 
 	sf::Vector2u _cursor;
 	sf::RenderWindow *_window;
@@ -34,12 +35,17 @@ private:
 
 	unsigned int _numberOfCollums;
 	unsigned int _numberOfRows;
-
+	bool _blink;
 	unsigned int _spaceBetweenLines;
 
+	bool _cursorState;
+	sf::Time _blickingRate;
+	sf::Clock *_clock; // starts the clock
 	sf::Texture _texture;
 	std::vector<std::string> _linesStr;
 	sf::RectangleShape _body;
+
+	std::map<char, std::vector<uint8_t>> _charset;
 };
 
 #endif // !HARDWARE_H_

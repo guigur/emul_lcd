@@ -138,14 +138,19 @@ void LiquidCrystal::rightToLeft()
 
 }
 
+// This will 'right justify' text from the cursor
 void LiquidCrystal::autoscroll()
 {
-
+	//_displaymode |= LCD_ENTRYSHIFTINCREMENT;
+	//command(LCD_ENTRYMODESET | _displaymode);
+	//hard.setMode()
 }
 
+// This will 'left justify' text from the cursor
 void LiquidCrystal::noAutoscroll()
 {
-
+	//_displaymode &= ~LCD_ENTRYSHIFTINCREMENT;
+	//command(LCD_ENTRYMODESET | _displaymode);
 }
 
 void LiquidCrystal::setRowOffsets(int row1, int row2, int row3, int row4)
@@ -163,14 +168,9 @@ void LiquidCrystal::setCursor(uint8_t col, uint8_t row)
 	hard.setCursor(col, row);
 }
 
-/*virtual size_t write(uint8_t)
-{
-
-}*/
-
 void LiquidCrystal::command(uint8_t)
 {
-
+	std::cout << "not implemented yet" << std::endl;
 }
 
 template<typename T>
@@ -183,4 +183,6 @@ void LiquidCrystal::print(T str)
 
 template void LiquidCrystal::print<int>(int);
 template void LiquidCrystal::print<char*>(char*);
+template void LiquidCrystal::print<const char*>(const char*);
+
 template void LiquidCrystal::print<double>(double);
