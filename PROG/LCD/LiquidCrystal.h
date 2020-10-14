@@ -83,8 +83,8 @@ class LiquidCrystal
 	//	virtual size_t write(uint8_t);
 		void command(uint8_t);
 
-		/*template<typename T>
-		void print(const T& str);*/
+		template<typename T>
+		void print(T str);
 private:
 	/*void send(uint8_t, uint8_t);
 	void write4bits(uint8_t);

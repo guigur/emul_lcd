@@ -11,6 +11,8 @@ class Hardware : public sf::RectangleShape
 public:
 	Hardware();
 	void clear();
+	void returnHome();
+
 	void setText(const std::string &str, const unsigned int &line = 0);
 	void setNumberOfCollums(const unsigned int &noc);
 	unsigned int getNumberOfCollums();

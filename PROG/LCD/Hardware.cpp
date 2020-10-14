@@ -20,8 +20,13 @@ void Hardware::clear()
 {
 	for (int i = 0; i < _numberOfRows; i++) //init the vector
 	{
-		linesStr.at(i) = "";
+		linesStr.at(i).insert(0, _numberOfCollums, ' ');
 	}
+}
+
+void Hardware::returnHome()
+{
+
 }
 
 void Hardware::gui_thread()
@@ -62,6 +67,11 @@ void Hardware::setText(const std::string &str, const unsigned int &line)
 	if (!linesStr.empty() && linesStr.size() > line)
 	{
 		linesStr.at(line) = str;
+		if (linesStr.at(line).length() < _numberOfCollums)
+		{
+			linesStr.at(line).insert(linesStr.at(line).end(), _numberOfCollums - linesStr.at(line).length(), ' '); //fill the remaning space with spaces
+		}
+
 	}
 }
 
@@ -78,13 +88,12 @@ unsigned int Hardware::getNumberOfCollums()
 void Hardware::setNumberOfRows(const unsigned int &nor)
 {
 	_numberOfRows = nor;
-	linesStr.clear();
-	std::cout << "old size " << linesStr.size() << std::endl;
+	linesStr.clear(); //erase the vector if you rerun this command
 	for (int i = 0; i < _numberOfRows; i++) //init the vector
 	{
 		linesStr.push_back("");
 	}
-	std::cout << "new size " << linesStr.size() << std::endl;
+	clear(); //to fill screen with empty characters
 
 }
 

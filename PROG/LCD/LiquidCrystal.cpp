@@ -67,22 +67,23 @@ void LiquidCrystal::begin(uint8_t cols, uint8_t rows, uint8_t charsize)
 
 	hard.setNumberOfCollums(cols);
 	hard.setNumberOfRows(rows);
-	hard.setText("I LOVE LCDs", 0);
-	hard.setText("-> guigur.com <-", 1);
-	//delayMicroseconds(50000);
-
+	std::this_thread::sleep_for(std::chrono::microseconds(50000)); // this command takes a long time!
+	/*
+	hard.setText("test", 0);
+	hard.setText("-> guigur.com <-s", 1);
+	*/
 }
 
 void LiquidCrystal::clear()
 {
-	hard.clear();
-	command(LCD_CLEARDISPLAY);  // clear display, set cursor position to zero
-	//delayMicroseconds(2000);  // this command takes a long time!
+	hard.clear(); //command(LCD_CLEARDISPLAY);  // clear display, set cursor position to zero
+	std::this_thread::sleep_for(std::chrono::microseconds(2000)); // this command takes a long time!
 }
 
 void LiquidCrystal::home()
 {
-
+	hard.returnHome(); //command(LCD_RETURNHOME);  // set cursor position to zero
+	std::this_thread::sleep_for(std::chrono::microseconds(2000)); // this command takes a long time!
 }
 
 void LiquidCrystal::noDisplay()
@@ -169,10 +170,13 @@ void LiquidCrystal::command(uint8_t)
 {
 
 }
-/*
-template<typename T>
-void LiquidCrystal::print(const T& str)
-{
 
+template<typename T>
+void LiquidCrystal::print(T str)
+{
+	std::cout << str << std::endl;
 }
-*/
+
+template void LiquidCrystal::print<int>(int);
+template void LiquidCrystal::print<char*>(char*);
+template void LiquidCrystal::print<double>(double);
