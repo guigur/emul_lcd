@@ -5,4 +5,4 @@ It can be very usefull if you're working on Visualstudio and don't have access t
 
 **Still WIP**
 
-![LCD demo](IMGS/2.PNG?raw=true "LCD demo")
+![LCD demo](IMGS/lcd_blinking_cursor.gif?raw=true "LCD demo")
