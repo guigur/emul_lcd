@@ -158,8 +158,14 @@ void LiquidCrystal::setRowOffsets(int row1, int row2, int row3, int row4)
 
 }
 
-void LiquidCrystal::createChar(uint8_t, uint8_t[])
+void LiquidCrystal::createChar(uint8_t location, uint8_t charmap[])
 {
+	if (location > 8 || location < 0) //only location from 0 to 7 are availables
+		return;
+	for (int i = 0; i < 8; i++)
+	{
+		//write(charmap[i]);
+	}
 
 }
 
@@ -182,6 +188,7 @@ void LiquidCrystal::print(T str)
 }
 
 template void LiquidCrystal::print<int>(int);
+template void LiquidCrystal::print<char>(char);
 template void LiquidCrystal::print<char*>(char*);
 template void LiquidCrystal::print<const char*>(const char*);
 

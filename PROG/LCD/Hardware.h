@@ -38,9 +38,10 @@ private:
 	unsigned int _numberOfRows;
 	unsigned int _spaceBetweenLines;
 
+	float _fOSC = 270000.f; //in Hz
 	bool _cursorState;
 	bool _cursorBlink;
-	bool _blinkState;
+	//bool _blinkState;
 
 	sf::Time _blickingRate;
 	sf::Clock *_clock; // starts the clock

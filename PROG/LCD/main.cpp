@@ -9,6 +9,16 @@
 	int main();
 	void setup();
 	void loop();
+	typedef char byte;
+	byte smiley[8] = {
+	  0b00000,
+	  0b10001,
+	  0b00000,
+	  0b00000,
+	  0b10001,
+	  0b01110,
+	  0b00000,
+	};
 
 	void delay(int msec)
 	{
@@ -22,6 +32,8 @@
 
 	void setup() 
 	{
+
+		//lcd.createChar(0, smiley);
 		lcd.begin(16, 2);
 		loop();
 	}
@@ -30,17 +42,21 @@
 	{
 		while (1)
 		{	
-			lcd.setCursor(0, 0);
-			lcd.print("I Love LCDs !");
-			lcd.setCursor(0, 1);
-			lcd.print("@guigur");
+			int count = 33;
+			char ascii = 0x00 + 33;    //Starting from 34th
 
-			// Turn off the cursor:
-			lcd.noCursor();
-			delay(500);
-			// Turn on the cursor:
-			lcd.cursor();
-			delay(500);
-			lcd.clear();
+			while (count != 235)
+			{
+				lcd.setCursor(0, 0);
+				lcd.print("DECIMAL = ");
+				lcd.print(count);
+				lcd.setCursor(0, 1);
+				lcd.print("ASCII = ");
+				lcd.print(ascii);
+				count++;
+				ascii++;
+				delay(1000);
+				lcd.clear();
+			}
 		}
 	}
