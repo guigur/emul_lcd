@@ -48,7 +48,7 @@
 			while (count != 235)
 			{
 				lcd.setCursor(0, 0);
-				lcd.write(0);
+				lcd.write(0xE0);
 				lcd.print("DECIMAL = ");
 				lcd.print(count);
 				lcd.setCursor(0, 1);
@@ -56,7 +56,7 @@
 				lcd.print(ascii);
 				count++;
 				ascii++;
-				delay(1000);
+				delay(500);
 				lcd.clear();
 			}
 		}
