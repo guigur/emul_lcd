@@ -17,11 +17,14 @@ public:
 	void blink(bool state);
 	void cursor(bool state);
 	void setCursor(const unsigned int &col, const unsigned int &row);
+	void createChar(const uint8_t &pos, uint8_t *character);
+	void write(const uint8_t &character);
 	void print(const std::string &str);
 	void setNumberOfCollums(const unsigned int &noc);
 	unsigned int getNumberOfCollums();
 	void setNumberOfRows(const unsigned int &nor);
 	unsigned int getNumberOfRows();
+	void debugChar(const uint8_t c);
 
 private:
 	void drawLine(sf::RenderTarget &target, int line) const;

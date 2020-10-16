@@ -89,6 +89,29 @@ void Hardware::setCursor(const unsigned int &col, const unsigned int &row)
 	_cursor.y = row;
 }
 
+void Hardware::write(const uint8_t &c)
+{
+	std::string temp;
+
+	temp = c;
+	//debugChar(c);
+
+	_linesStr.at(_cursor.y).replace(_cursor.x, 1, temp);
+	_cursor.x = _cursor.x++;
+	fillWithBlanks(_cursor.y);
+}
+
+void Hardware::createChar(const uint8_t &pos, uint8_t *character)
+{
+	std::vector<uint8_t> charmap;
+	for (int i = 0; i < 8; i++)
+	{
+		charmap.push_back(character[i]);
+	}
+
+	_charset[pos] = charmap;
+}
+
 void Hardware::print(const std::string &str)
 {
 	//_linesStr.at(_cursor.y).insert(_cursor.x, str);
@@ -130,6 +153,22 @@ void Hardware::setNumberOfRows(const unsigned int &nor)
 unsigned int Hardware::getNumberOfRows()
 {
 	return _numberOfRows;
+}
+
+//////////////////////////////////////////////// DEBUG ////////////////////////////////////////////////
+void Hardware::debugChar(const uint8_t c)
+{
+	std::cout << "O=====O";
+	for (auto line : _charset[0x00])
+	{
+		std::cout << std::endl << "|";
+		for (int i = 4; i >= 0; --i)
+		{
+			std::cout << ((line & (1 << i)) ? (char)219 : (char)255);
+		}
+		std::cout << "|";
+	}
+	std::cout << std::endl << "O=====O" << std::endl;
 }
 
 //////////////////////////////////////////// PRIVATE STUFF ////////////////////////////////////////////
@@ -176,9 +215,10 @@ void Hardware::fillWithBlanks(const unsigned int &line)
 
 void Hardware::setupCharset()
 {
-	///TODO: finish the charset and maybe add an alternative one
-
 	//1st col 0x00 -> 0x0F
+	//custom chars 0x00 -> 0x07
+
+	// 0x08 -> 0x0F
 	//reserved for the lcd ram
 
 	//2nd col 0x10 -> 0x1F

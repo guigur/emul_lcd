@@ -9,8 +9,8 @@
 	int main();
 	void setup();
 	void loop();
-	typedef char byte;
-	byte smiley[8] = {
+
+	uint8_t smiley[8] = {
 	  0b00000,
 	  0b10001,
 	  0b00000,
@@ -28,12 +28,12 @@
 	int main()
 	{
 		setup();
+		return (0);
 	}
 
 	void setup() 
 	{
-
-		//lcd.createChar(0, smiley);
+		lcd.createChar(0, smiley);
 		lcd.begin(16, 2);
 		loop();
 	}
@@ -48,6 +48,7 @@
 			while (count != 235)
 			{
 				lcd.setCursor(0, 0);
+				lcd.write(0);
 				lcd.print("DECIMAL = ");
 				lcd.print(count);
 				lcd.setCursor(0, 1);
