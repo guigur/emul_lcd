@@ -35,3 +35,9 @@ Well, keep in mind, this is still **Work in Progress**, so not all calls are imp
 | `rightToLeft()`        | ❌ | TODO          |
 | `createChar()`         | ✔️ |               |
 
+### The charset
+Here is the implemented charset of this program:
+
+![charset](https://raw.githubusercontent.com/guigur/display_charset/main/gen%20charset%20bitmap/gen%20charset%20bitmap/charset%20LCD%20big.png "LCD demo")
+
+(Note: This image has been generated with the [display charset](https://github.com/guigur/display_charset) program)
