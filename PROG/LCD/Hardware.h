@@ -14,6 +14,7 @@ public:
 	void returnHome();
 
 	void setText(const std::string &str, const unsigned int &line);
+	void display(bool state);
 	void blink(bool state);
 	void cursor(bool state);
 	void setCursor(const unsigned int &col, const unsigned int &row);
@@ -42,9 +43,9 @@ private:
 	unsigned int _spaceBetweenLines;
 
 	float _fOSC = 270000.f; //in Hz
+	bool _display;
 	bool _cursorState;
 	bool _cursorBlink;
-	//bool _blinkState;
 
 	sf::Time _blickingRate;
 	sf::Clock *_clock; // starts the clock

@@ -14,51 +14,32 @@ LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
 	uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 {
-	init(0, rs, rw, enable, d0, d1, d2, d3, d4, d5, d6, d7);
+	begin(16, 1);
 }
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
 	uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 {
-	init(0, rs, 255, enable, d0, d1, d2, d3, d4, d5, d6, d7);
+	begin(16, 1);
 }
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
 {
-	init(1, rs, rw, enable, d0, d1, d2, d3, 0, 0, 0, 0);
+	begin(16, 1);
 }
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
 {
-	init(1, rs, 255, enable, d0, d1, d2, d3, 0, 0, 0, 0);
+	begin(16, 1);
 }
 
-//not very usefull
 void LiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable,
 	uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
 	uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 {
-	_rs_pin = rs;
-	_rw_pin = rw;
-	_enable_pin = enable;
-
-	_data_pins[0] = d0;
-	_data_pins[1] = d1;
-	_data_pins[2] = d2;
-	_data_pins[3] = d3;
-	_data_pins[4] = d4;
-	_data_pins[5] = d5;
-	_data_pins[6] = d6;
-	_data_pins[7] = d7;
-
-	if (fourbitmode)
-		_displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
-	else
-		_displayfunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
-
 	begin(16, 1);
 }
 
@@ -70,10 +51,6 @@ void LiquidCrystal::begin(uint8_t cols, uint8_t rows, uint8_t charsize)
 	hard.setNumberOfCollums(cols);
 	hard.setNumberOfRows(rows);
 	std::this_thread::sleep_for(std::chrono::microseconds(50000)); // this command takes a long time!
-	/*
-	hard.setText("test", 0);
-	hard.setText("-> guigur.com <-s", 1);
-	*/
 }
 
 void LiquidCrystal::clear()
@@ -90,12 +67,12 @@ void LiquidCrystal::home()
 
 void LiquidCrystal::noDisplay()
 {
-
+	hard.display(false);
 }
 
 void LiquidCrystal::display()
 {
-
+	hard.display(true);
 }
 
 void LiquidCrystal::noBlink()
@@ -194,3 +171,5 @@ void LiquidCrystal::write(uint8_t value)
 {
 	hard.write(value);
 }
+
+//////////////////////////////////////////// PRIVATE STUFF ////////////////////////////////////////////

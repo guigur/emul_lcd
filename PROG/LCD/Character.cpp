@@ -53,15 +53,7 @@ sf::Vector2f Character::getPixSize()
 	return size;
 }
 
-/*
-void Character::blinkCursor(const sf::Vector2u &posCursor)
-{
-	_lcd_char = 'A';
-	searchAndSet();
-}*/
-
-
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// PRIVATE STUFF ////////////////////////////////////////////
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::RectangleShape pix;

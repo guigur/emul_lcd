@@ -3,6 +3,7 @@
 Hardware::Hardware()
 {
 	setupCharset();
+	_display = true;
 	_spaceBetweenLines = 45;
 	_clock = &sf::Clock(); //init da clock
 	_blickingRate = sf::milliseconds(409.6f * 250000.f / _fOSC);
@@ -71,11 +72,15 @@ void Hardware::gui_thread()
 	}
 }
 
+void Hardware::display(bool state)
+{
+	_display = state;
+}
+
 void Hardware::blink(bool state)
 {
 	_cursorBlink = state;
 	_cursorState = state;
-	//_clock->restart();
 }
 
 void Hardware::cursor(bool state)
@@ -182,12 +187,19 @@ void Hardware::drawLine(sf::RenderTarget& target, int line) const
 
 	for (unsigned int i = 0; i < _numberOfCollums && i < _linesStr.at(line).length(); i++)
 	{
-		charos.setChar(_linesStr.at(line).at(i));
-
-		if (_cursorState && _cursor.x == i && _cursor.y == line)
+		if (_display)
 		{
-			if (_cursorState == true)
-				charos.setChar(0xFF);
+			charos.setChar(_linesStr.at(line).at(i));
+
+			if (_cursorState && _cursor.x == i && _cursor.y == line)
+			{
+				if (_cursorState == true)
+					charos.setChar(0xFF);
+			}
+		}
+		else
+		{
+			charos.setChar(' ');
 		}
 
 		charos.setPosition(startPos.x + (charos.getPixSize().x * 5 + spaceCharacters) * i, startPos.y + 0 + (line * _spaceBetweenLines));
