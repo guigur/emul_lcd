@@ -25,8 +25,8 @@ Well, keep in mind, this is still **Work in Progress**, so not all calls are imp
 | `noCursor()`           | ✔️ |               |
 | `blink()`              | ✔️ |               |
 | `noBlink()`            | ✔️ |               |
-| `display()`            | ❌ | TODO          |
-| `noDisplay()`          | ❌ | TODO          |
+| `display()`            | ✔️ |               |
+| `noDisplay()`          | ✔️ |               |
 | `scrollDisplayLeft()`  | ❌ | TODO          |
 | `scrollDisplayRight()` | ❌ | TODO          |
 | `autoscroll()`         | ❌ | TODO          |
